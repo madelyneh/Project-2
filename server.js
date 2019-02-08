@@ -6,10 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 
-var db = require("./models");
+var models = require("./models");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+// var JWTStrategy = require('passport-jwt');
+
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -29,12 +34,22 @@ passport.use(new localStorage(
     passwordField: 'password'
   },
   function(username, password, cd) {
-    console.log(user);
-    if(!user || !user.validatePassword(password)) {
-      return cd(null, false, {message: 'Incorrect email or password.'})
-    }
-
-}
+    models.User.findOne({ username: username }).then(
+      function(user) {
+        console.log(user);
+        if (!user || !user.validatePassword(password)) {
+          return cd(null, false, {message: 'Incorrect email or password.'});
+        }else if (user.validatePassword(password)) {
+          return createImageBitmap(null, user, {message: 'Logged in Sucessfully.'});
+        } else {
+          return cb(null, false, {message: 'Incorrect Password. Please try again.'})
+        }
+      }
+    ).catch(error => {
+      cd(error)
+      throw error;
+    });
+  }
 ));
 
 
@@ -50,6 +65,18 @@ app.set("view engine", "handlebars");
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+require("./routes/authRoutes")(app);
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  models.User.findById(id, function(err, user) {
+    cb(err, user);
+  });
+});
+
 
 var syncOptions = { force: false };
 
@@ -60,7 +87,7 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
+models.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
