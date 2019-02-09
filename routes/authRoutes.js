@@ -1,4 +1,3 @@
-let models = require("../models");
 let passport = require("passport");
 let jwt = require('jsonwebtoken');
 
@@ -10,19 +9,28 @@ module.exports = function(app) {
             function(error, user, info) {
                 if (error || !user) {
                     return response.status(400).json({
-                        message: 'Something is not right',
+                        message: 'Unable to Authorize',
                         user   : user,
-                        error  : error
+                        info  : info
                     });
                 }
                request.login(user, {session: false}, (error) => {
                    if (error) {
                        response.send(error);
                    }
-                   console.log("user: " + user.username);
-                   // generate a signed son web token with the contents of user object and return it in the response
-                   const token = jwt.sign(user.toJSON(), 'your_jwt_secret');
-                   response.json({user, token});
+                   let sanitizedUser = {
+                       id: user.id,
+                       username: user.username,
+                       email: user.email
+                   }
+                   // generate a signed json web token with the contents of user object and return it in the response
+                   const token = jwt.sign(sanitizedUser, 'your_jwt_secret');
+                   response.json(
+                       {
+                           user: sanitizedUser,
+                           token: token
+                        }
+                    );
                 });
             }
         )(request, response);
