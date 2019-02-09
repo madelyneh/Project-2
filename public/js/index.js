@@ -1,11 +1,27 @@
 // Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+let $firstName = $("#first-name");
+let $lastName = $("#last-name");
+let $birthday = $("birthday");
+let $username= $("#username");
+let $password = $("#password");
+let $submitBtn = $("#submit");
 
 // The API object contains methods for each kind of request we'll make
-var API = {
+let API = {
+  authenticateUser: function(username, password) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "api/examples",
+      data: JSON.stringify(
+        {
+          username: username,
+          password: password
+        })
+    });
+  },
   saveExample: function(example) {
     return $.ajax({
       headers: {
@@ -17,9 +33,19 @@ var API = {
     });
   },
   getExamples: function() {
+    let token = document.cookie.split(";")
+    .filter(
+      function(element) {
+        return element.indexOf('token=') === 0
+      }
+    )[0].split("=")[1];
     return $.ajax({
       url: "api/examples",
-      type: "GET"
+      type: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      }
     });
   },
   deleteExample: function(id) {
@@ -31,21 +57,21 @@ var API = {
 };
 
 // refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
+let refreshExamples = function() {
   API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
+    let $examples = data.map(function(example) {
+      let $a = $("<a>")
         .text(example.text)
         .attr("href", "/example/" + example.id);
 
-      var $li = $("<li>")
+      let $li = $("<li>")
         .attr({
           class: "list-group-item",
           "data-id": example.id
         })
         .append($a);
 
-      var $button = $("<button>")
+      let $button = $("<button>")
         .addClass("btn btn-danger float-right delete")
         .text("ｘ");
 
@@ -61,31 +87,26 @@ var refreshExamples = function() {
 
 // handleFormSubmit is called whenever we submit a new example
 // Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
+let handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
+  let username = $username.val().trim();
+  let password = $password.val().trim();
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
-  }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+  API.authenticateUser(usernamem, password).then(function(token) {
+    document.cookie = "token=" + token.token;
+    location.reload();
   });
 
-  $exampleText.val("");
-  $exampleDescription.val("");
+  $username.val("");
+  $password.val("");
 };
 
 // handleDeleteBtnClick is called when an example's delete button is clicked
 // Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
+let handleDeleteBtnClick = function() {
+  let idToDelete = $(this)
     .parent()
     .attr("data-id");
 
