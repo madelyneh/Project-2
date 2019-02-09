@@ -40,7 +40,7 @@ passport.use(new LocalStrategy(
         if (!user || !user.validatePassword(password)) {
           return cd(null, false, {message: 'Incorrect email or password.'});
         };
-          return cd(null, user, {message: 'Logged in Sucessfully.'});
+          return cd(null, user, {message: 'Logged in Successfully.'});
       }
     ).catch(error => {
       cd(error)

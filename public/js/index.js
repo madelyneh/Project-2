@@ -15,7 +15,7 @@ let API = {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "/models/index.js",
+      url: "models/index.js",
       data: JSON.stringify(
         {
           username: username,
