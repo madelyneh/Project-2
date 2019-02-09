@@ -9,12 +9,13 @@ let $submitBtn = $("#submit");
 // The API object contains methods for each kind of request we'll make
 let API = {
   authenticateUser: function(username, password) {
+    console.log(username + " " + password);
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
+      url: "/models/index.js",
       data: JSON.stringify(
         {
           username: username,
@@ -23,6 +24,7 @@ let API = {
     });
   },
   saveExample: function(example) {
+		console.log('TCL: example', example)
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
@@ -32,6 +34,7 @@ let API = {
       data: JSON.stringify(example)
     });
   },
+  //this grabs the cookie that we stored for the user in the browser
   getExamples: function() {
     let token = document.cookie.split(";")
     .filter(
@@ -94,7 +97,8 @@ let handleFormSubmit = function(event) {
   let password = $password.val().trim();
 
 
-  API.authenticateUser(usernamem, password).then(function(token) {
+  API.authenticateUser(username, password).then(function(token) {
+    console.log(username + " " + password);
     document.cookie = "token=" + token.token;
     location.reload();
   });
@@ -117,4 +121,4 @@ let handleDeleteBtnClick = function() {
 
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+// $exampleList.on("click", ".delete", handleDeleteBtnClick);

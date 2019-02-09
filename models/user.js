@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       username: DataTypes.STRING,
       password: DataTypes.STRING,
-      email: DataTypes.STRING,
+      birthday: DataTypes.STRING,
       firstname: DataTypes.STRING,
       lastname: DataTypes.STRING
     },
@@ -16,18 +16,21 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate: (user) => {
           const salt = bcrypt.genSaltSync();
           user.password = bcrypt.hashSync(user.password, salt);
+					console.log('TCL: user.password', user.password)
+          
         }
       }
-    });
+    }
+  );
   User.associate = function(models) {
     // associations can be defined here
   };
 
   User.prototype.validatePassword = function(password) {
-    return bcrypt.compare(
+    return bcrypt.compareSync(
         password,
         this.password
-    )
+    );
   };
 
   User.sync();

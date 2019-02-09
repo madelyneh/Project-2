@@ -26,11 +26,13 @@ module.exports = function(app) {
                    // generate a signed json web token with the contents of user object and return it in the response
                    const token = jwt.sign(sanitizedUser, 'your_jwt_secret');
                    response.json(
+                   
                        {
                            user: sanitizedUser,
                            token: token
                         }
                     );
+                    console.log('authRoutes: TOKEN', token);
                 });
             }
         )(request, response);

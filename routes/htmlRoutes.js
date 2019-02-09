@@ -5,7 +5,7 @@ let jwt = require("jsonwebtoken");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(request, response) {
-    if (request.cookie.token) {
+    if (request.cookies.token) {
       let user = jwt.verify(request.cookie.token, 'your_jwt_secret');
 			console.log('TCL: user', user)
       if (user) {
@@ -22,7 +22,7 @@ module.exports = function(app) {
         });
       }
     } else {
-      return response.render("index", {
+      return response.render("user", {
         msg: "Welcome!"
       });
     }
@@ -42,6 +42,15 @@ module.exports = function(app) {
       });
     });
   });
+
+  app.get("/index", function(req, res) {
+    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+      res.render("index", {
+        example: dbExample
+      });
+    });
+  });
+
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
