@@ -9,8 +9,10 @@ module.exports = function(sequelize, DataTypes) {
   Weekly.associate = function(models) {
     // We're saying that a Weekly should belong to an Author
     // A Weekly can't be created without an Author due to the foreign key constraint
-    Weekly.hasMany(models.Post, {
-      onDelete: "cascade"
+    Weekly.belongsTo(models.Author, {
+      foreignKey: {
+        allowNull: false
+      }
     });
   };
 

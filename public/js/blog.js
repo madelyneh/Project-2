@@ -1,7 +1,8 @@
 // var db = require("../../models")
 
-$(document).ready(function() {
+$(document).ready(function () {
   /* global moment */
+  var authID = [];
 
   // blogContainer holds all of our posts
   var blogContainer = $(".blog-container");
@@ -9,6 +10,7 @@ $(document).ready(function() {
   // Click events for the edit and delete buttons
   $(document).on("click", "button.delete", handlePostDelete);
   $(document).on("click", "button.edit", handlePostEdit);
+  $(document).on("click","button.newPost", reroute);
   // Variable to hold our posts
   var posts;
 
@@ -25,6 +27,17 @@ $(document).ready(function() {
     getPosts();
   }
 
+  function reroute() {
+    var url = window.location.search;
+    var authorId;
+    if (url.indexOf("?author_id=") !== -1) {
+      authorId = url.split("=")[1];
+    }
+    console.log("!!!!!!!! " + authorId);
+        window.location.href = "/cms?author_id="+authorId;
+
+
+  }
 
   // This function grabs posts from the database and updates the view
   function getPosts(author) {
@@ -32,15 +45,14 @@ $(document).ready(function() {
     if (authorId) {
       authorId = "/?author_id=" + authorId;
     }
-    $.get("/api/posts" + authorId, function(data) {
+    $.get("/api/posts" + authorId, function (data) {
       console.log("Posts", data);
       posts = data;
       if (!posts || !posts.length) {
 
         displayEmpty(author);
         // alert(author)
-      }
-      else {
+      } else {
         initializeRows();
       }
     });
@@ -49,10 +61,10 @@ $(document).ready(function() {
   // This function does an API call to delete posts
   function deletePost(id) {
     $.ajax({
-      method: "DELETE",
-      url: "/api/posts/" + id
-    })
-      .then(function() {
+        method: "DELETE",
+        url: "/api/posts/" + id
+      })
+      .then(function () {
         getPosts(postCategorySelect.val());
       });
   }
@@ -70,7 +82,7 @@ $(document).ready(function() {
   // This function constructs a post's HTML
   function createNewRow(post) {
     var formattedDate = new Date(post.createdAt);
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var today = days[formattedDate.getDay()];
     formattedDate = moment(formattedDate).format("MMMM Do YYYY");
     var newPostCard = $("<div>");
@@ -86,18 +98,20 @@ $(document).ready(function() {
     var newPostTitle = $("<h2>");
     var newPostDate = $("<small>");
     var newPostAuthor = $("<h5>");
-    newPostAuthor.text("Written by: "/**here was post.Author.name */);
+    console.log("*************************" + post.Author.name);
+    authID.push(post.Author.id);
+    console.log("+++++++++++++" + authID)
+    newPostAuthor.text("Written by: " +post.Author.name/**here was post.Author.name */ );
     newPostAuthor.css({
       float: "right",
       color: "blue",
-      "margin-top":
-      "-10px"
+      "margin-top": "-10px"
 
     });
     // console.log(post[0].Author.name)
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-body");
-    
+
     // new Andrew work
     var highlight = $("<p>");
     var positive = $("<p>");
@@ -112,12 +126,12 @@ $(document).ready(function() {
     // new Andrew work
     highlight.text("Highlight: " + post.highlight + ".");
     positive.text("Positive: " + post.positive + ".");
-    negative.text("Negative: " + post.negative+".");
-    option1.text("Option 1: " + post.option1 +".");
-    option2.text("Option 2: " + post.option2+".");
-    option3.text("Option 3: " + post.option3+".");
-    music.text("Music: " + post.music+".");
-    video.text("Video: " + post.video+".");
+    negative.text("Negative: " + post.negative + ".");
+    option1.text("Option 1: " + post.option1 + ".");
+    option2.text("Option 2: " + post.option2 + ".");
+    option3.text("Option 3: " + post.option3 + ".");
+    music.text("Music: " + post.music + ".");
+    video.text("Video: " + post.video + ".");
 
     newPostDate.text(today + " " + formattedDate);
     newPostTitle.append(newPostDate);
@@ -135,7 +149,7 @@ $(document).ready(function() {
     newPostCardBody.append(option3);
     newPostCardBody.append(music);
     newPostCardBody.append(video);
-console.log(post.AuthorId)
+    console.log(post.AuthorId)
     newPostCard.append(newPostCardHeading);
     newPostCard.append(newPostCardBody);
     newPostCard.data("post", post);
@@ -163,7 +177,7 @@ console.log(post.AuthorId)
   // This function displays a message when there are no posts
   function displayEmpty(id) {
     var query = window.location.search;
-    console.log("==============this is query: "+query)
+    console.log("==============this is query: " + query)
     var partial = "";
     // id = id
 
@@ -172,9 +186,12 @@ console.log(post.AuthorId)
     }
     blogContainer.empty();
     var messageH2 = $("<h2>");
-    messageH2.css({ "text-align": "center", "margin-top": "50px" });
+    messageH2.css({
+      "text-align": "center",
+      "margin-top": "50px"
+    });
     messageH2.html("No posts yet" + partial + ", navigate <a href='/cms" + query +
-    "'>here</a> in order to get started.");
+      "'>here</a> in order to get started.");
     blogContainer.append(messageH2);
   }
 

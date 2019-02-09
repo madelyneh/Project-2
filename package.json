@@ -12,11 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "express": "^4.16.3",
-    "mysql2": "^1.6.4",
-    "sequelize": "^4.41.2"
-=======
     "bcrypt": "^3.0.3",
     "chart.js": "^2.7.3",
     "dotenv": "^6.0.0",
@@ -37,6 +32,5 @@
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
     "prettier": "^1.13.7"
->>>>>>> e7610fb8a0fb22510c3aadb51aafd61fc732d2ca
   }
 }

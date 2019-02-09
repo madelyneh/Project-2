@@ -45,12 +45,6 @@ $(document).ready(function () {
     // }
     // Constructing a newPost object to hand to the database
     var newPost = {
-      // title: titleInput
-      //     .val()
-      //     .trim(),
-      //   body: bodyInput
-      //     .val()
-      //     .trim(),
       highlight: $highlight.val().trim(),
       positive: $positiveText.val().trim(),
       negative: $negativeText.val().trim(),
@@ -75,8 +69,14 @@ $(document).ready(function () {
 
   // Submits a new post and brings user to blog page upon completion
   function submitPost(post) {
+    var url = window.location.search;
+    var authorId;
+    if (url.indexOf("?author_id=") !== -1) {
+      authorId = url.split("=")[1];
+    }
+    console.log("!!!!!!!! " + post.name);
     $.post("/api/posts", post, function () {
-      window.location.href = "/blog";
+      window.location.href = "/blog?author_id="+authorId;
     });
   }
 

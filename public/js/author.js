@@ -41,13 +41,14 @@ $(document).ready(function () {
         .trim()
     });
 
+
     // submitAccount({
     //   name: nameInput
-    window.location.href = "/blog?author_id=" + authorData.id;
+    // window.location.href = "localhost:8000/blog?author_id=" + authorData.id;
     //     .val()
     //     .trim(),
     //     });
-  }
+  } 
 
   // A function for creating an author. Calls getAuthors upon completion
   function upsertAuthor(authorData) {
@@ -58,6 +59,9 @@ $(document).ready(function () {
 
   // Function for creating a new list row for authors
   function createAuthorRow(authorData) {
+    console.log("**************************" + authorData.birthday)
+    window.location.href = "/blog?author_id=" + authorData.id;
+
 
     var newTr = $("<tr>");
     newTr.data("author", authorData);
