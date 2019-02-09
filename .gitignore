@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 node_modules
+=======
+.DS_Store
+node_modules
+npm-debug.log
+.env
+package-lock.json
+>>>>>>> e7610fb8a0fb22510c3aadb51aafd61fc732d2ca
