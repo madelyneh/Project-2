@@ -33,6 +33,7 @@
         "quotes": [
             "error",
             "double"
+           
         ],
         "semi": [
             "error",

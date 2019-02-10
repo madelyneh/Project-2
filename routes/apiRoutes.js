@@ -1,24 +1,28 @@
-var db = require("../models");
+let db = require("../models");
+let router = require('express').Router();
 
-module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
+// Get all examples
+router.get("/", function(request, response, next) {
+  // access the user on authenticated routes
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
+  console.log("Authenticated user: " + JSON.stringify(request, response));
+  db.Example.findAll({}).then(function(dbExamples) {
+    request.json(dbExamples);
   });
+});
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
+// create new 
+router.post("/", function(request, response, next) {
+  db.Example.create(request.body).then(function(dbExample) {
+    response.json(dbExample);
   });
-};
+});
+
+// delete by id
+router.delete("/:id", function(request, response, next) {
+  db.Example.destroy({ where: { id: request.params.id } }).then(function(dbExample) {
+    response.json(dbExample);
+  });
+})
+
+module.exports = router;
