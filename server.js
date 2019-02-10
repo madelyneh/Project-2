@@ -16,7 +16,7 @@ var db = require("./models");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
@@ -42,7 +42,7 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   function(username, password, cd) {
-    db.User.findOne({ username: username }).then(
+    db.User.findOne({ where:{ username: username }}).then(
       function(user) {
         console.log(user);
         if (!user || !user.validatePassword(password)) {
@@ -78,12 +78,7 @@ app.use(express.static("public"));
 
 // Do we need???
 // Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 // Routes
