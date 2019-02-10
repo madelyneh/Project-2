@@ -54,6 +54,60 @@ module.exports = function(app) {
   });
 
 
+// Load daily page and pass in an example by id
+app.get("/daily/:id", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("daily", {
+      example: dbExample
+    });
+  });
+});
+
+app.get("/daily", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("daily", {
+      example: dbExample
+    });
+  });
+});
+
+
+// Load weekly page and pass in an example by id
+app.get("/weekly/:id", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("weekly", {
+      example: dbExample
+    });
+  });
+});
+
+app.get("/weekly", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("weekly", {
+      example: dbExample
+    });
+  });
+});
+
+
+// Load monthly page and pass in an example by id
+app.get("/monthly/:id", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("monthly", {
+      example: dbExample
+    });
+  });
+});
+
+app.get("/monthly", function(req, res) {
+  db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    res.render("monthly", {
+      example: dbExample
+    });
+  });
+});
+
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
