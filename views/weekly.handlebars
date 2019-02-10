@@ -1,0 +1,85 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">Minima<strong>list</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Daily</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Weekly <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Monthly</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            Login
+        </span>
+    </div>
+</nav>
+
+{{!-- Weekly card layout. --}}
+
+<div class="contatiner cardContainer">
+    <div class="row">
+
+        {{!-- Add new entry card. --}}
+        <div class="card mb-3 col-sm-12 col-lg-6 col-xl-4">
+            <div id="plusButton">
+                <span>+</span>
+            </div>
+        </div>
+
+
+        {{!-- Main weekly card. --}}
+        <div class="card mb-3 col-sm-12 col-lg-6 col-xl-4">
+
+            <div class="card-header bg-transparent">
+                <div id="weeklyRow">
+                    <span>01/01-01/08</span>
+                    <span><strong>SUMMARY</strong></span>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="weeklyContentSection">
+                    <span class="weeklyContentSection">
+                        <i class="fas fa-arrow-circle-up"></i>
+                        <strong>Best:</strong> goes here.
+                    </span>
+                    <br>
+                    <span class="weeklyContentSection">
+                        <i class="fas fa-arrow-circle-down"></i>
+                        <strong>Worst:</strong> goes here.
+                    </span>
+                    <br>
+                    <span class="weeklyContentSection">
+                        <i class="fas fa-arrow-circle-right"></i>
+                        <strong>Next:</strong> goes here.
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="card-footer bg-transparent" id="habitsRow">
+                <div>
+                    <span>
+                        <i class="fas fa-running"></i>
+                    </span>
+                    <span>
+                        <i class="fas fa-dumbbell"></i>
+                    </span>
+                    <span>
+                        <i class="fas fa-tint"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
