@@ -1,4 +1,10 @@
 require("dotenv").config();
+// *****************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+//
+// ******************************************************************************
+// *** Dependencies
+// =============================================================
 var express = require("express");
 var exphbs = require("express-handlebars");
 var logger = require('morgan');
@@ -7,6 +13,8 @@ var bodyParser = require('body-parser');
 
 var db = require("./models");
 
+// Sets up the Express App
+// =============================================================
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -34,7 +42,7 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   function(username, password, cd) {
-    db.User.findOne({ username: username }).then(
+    db.User.findOne({ where:{ username: username }}).then(
       function(user) {
         console.log(user);
         if (!user || !user.validatePassword(password)) {
@@ -65,13 +73,12 @@ passport.use(
   )
 );
 
+// Static directory
+app.use(express.static("public"));
+
+// Do we need???
 // Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 // Routes
@@ -80,32 +87,27 @@ app.use('/api/examples', passport.authenticate('jwt', {session: false}), secureR
 require("./routes/htmlRoutes")(app);
 require("./routes/authRoutes")(app);
 
-// passport.serializeUser(function(user, cb) {
-//   cb(null, user.id);
-// });
-
-// passport.deserializeUser(function(id, cb) {
-//   db.User.findById(id, function(err, user) {
-//     cb(err, user);
-//   });
-// });
-
+// Their new routes
+require("./routes/html-routes.js")(app);
+require("./routes/author-api-routes.js")(app);
+require("./routes/post-api-routes.js")(app);
 
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
-  syncOptions.force = true;
+  syncOptions.force = false;
 }
 
 // Starting the server, syncing our models ------------------------------------/
+// https://github.com/sequelize/sequelize/issues/2670
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-      PORT,
-      PORT
+    PORT,
+    PORT
     );
   });
 });

@@ -1,3 +1,5 @@
+// DELETE THIS FILE
+
 'use strict';
 let bcrypt = require('bcrypt');
 
@@ -8,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       username: DataTypes.STRING,
       password: DataTypes.STRING,
       birthday: DataTypes.STRING,
-      firstname: DataTypes.STRING,
+      fullname: DataTypes.STRING,
       lastname: DataTypes.STRING
     },
     {
@@ -26,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   };
 
+  // FIX THISSS
   User.prototype.validatePassword = function(password) {
     return bcrypt.compareSync(
         password,

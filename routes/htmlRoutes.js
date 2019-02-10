@@ -1,3 +1,5 @@
+// THIS ALL NEEDS TO BE UPDATED
+
 let db = require("../models");
 let jwt = require("jsonwebtoken");
 
@@ -6,13 +8,13 @@ module.exports = function(app) {
   // Load index page
   app.get("/", function(request, response) {
     if (request.cookies.token) {
-      let user = jwt.verify(request.cookie.token, 'your_jwt_secret');
-			console.log('TCL: user', user)
-      if (user) {
+      let author = jwt.verify(request.cookie.token, 'your_jwt_secret');
+			console.log('TCL: author', author)
+      if (author) {
         db.Example.findAll({}).then(function(dbExamples) {
           return response.render("index", {
             msg: "Welcome!",
-            loggedInUser: user,
+            loggedInAuthor: author,
             examples: dbExamples
           });
         });

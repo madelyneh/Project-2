@@ -1,14 +1,18 @@
 {
-  "name": "node-handlebars-boilerplate",
+  "name": "post-author-joins",
   "version": "1.0.0",
   "description": "Project 2 Starter",
   "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "watch": "nodemon server.js"
     "lint": "eslint **/*.js --quiet",
     "fix": "eslint --fix .",
     "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.3",
@@ -25,7 +29,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^4.42.0",
+    "sequelize": "^4.41.2",
     "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {

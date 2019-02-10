@@ -1,3 +1,5 @@
+// DELETE THIS FILE
+
 // Get references to page elements
 let $firstName = $("#first-name");
 let $lastName = $("#last-name");
