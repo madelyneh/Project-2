@@ -5,6 +5,8 @@
 // Dependencies
 // =============================================================
 var path = require("path");
+let db = require("../models");
+let jwt = require("jsonwebtoken");
 
 // Routes
 // =============================================================
@@ -19,12 +21,18 @@ module.exports = function(app) {
 
   // cms route loads cms.html
   app.get("/cms", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/cms.html"));
+    // res.sendFile(path.join(__dirname, "../public/cms.html"));
+    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+      res.render("daily", {
+        example: dbExample
+      });
+    });
   });
 
   // blog route loads blog.html
   app.get("/blog", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/blog.html"));
+    // res.sendFile(path.join(__dirname, "../public/blog.html"));
+    
   });
 
   // authors route loads author-manager.html
