@@ -16,13 +16,13 @@ module.exports = function(app) {
 
   // index route loads view.html
   app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/blog.html"));
+    res.sendFile(path.join(__dirname, "../public/author-manager.html"));
   });
 
   // cms route loads cms.html
   app.get("/cms", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/cms.html"));
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+    db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("daily", {
         example: dbExample
       });
