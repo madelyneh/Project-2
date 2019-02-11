@@ -76,7 +76,7 @@ $(document).ready(function () {
     }
     console.log("!!!!!!!! " + post.name);
     $.post("/api/posts", post, function () {
-      window.location.href = "/daily?author_id="+authorId;
+      window.location.href = "/daily?author_id=" + authorId;
     });
   }
 
