@@ -54,7 +54,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/cms.html"));
   });
 
-  app.get("/weeklyPost", function(req, res) {
+  app.get("/weekly-post", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/weekly.html"));
   });
 
