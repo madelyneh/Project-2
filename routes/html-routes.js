@@ -20,7 +20,7 @@ module.exports = function(app) {
   });
 
   // cms route loads cms.html
-  app.get("/cms", function(req, res) {
+  app.get("/daily", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/cms.html"));
     db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("daily", {
@@ -43,6 +43,10 @@ module.exports = function(app) {
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
+  });
+  
+  app.get("/post", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/cms.html"));
   });
 
 };

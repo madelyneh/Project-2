@@ -103,6 +103,10 @@
   margin-top: 10px;
   /* margin-bottom: 10px; */
 }
+
+#add {
+  cursor: pointer;
+}
 /* Footer */
 /* .footer {
   position: fixed;
