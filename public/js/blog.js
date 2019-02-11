@@ -38,6 +38,24 @@ $(document).ready(function () {
 
 
   }
+  // grabs the author's information from data base.
+   let getAuthor = function() {
+    let token = document.cookie.split(";")
+    .filter(
+      function(element) {
+        return element.indexOf('token=') === 0
+      }
+    )[0].split("=")[1];
+    return $.ajax({
+      url: "api/author",
+      type: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      }
+    });
+  };
+
 
   // This function grabs posts from the database and updates the view
   function getPosts(author) {

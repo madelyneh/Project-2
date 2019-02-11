@@ -1,7 +1,6 @@
 $(document).ready(function() {
   // Getting references to the name input and author container, as well as the table body
-  var nameInput = $("#author-name");
-  var lastName = $("#author-last");
+  var nameInput = $("#author-full-name");
   var username = $("#author-username");
   var password = $("#author-password");
   var birthday = $("#author-birthday");;
@@ -35,6 +34,14 @@ $(document).ready(function() {
       birthday: birthday.val().trim(),
       password: password.val().trim()
     });
+
+    // !!!check this to verify everthing is working properly
+    API.authenticateUser(upsertAuthor.username, upsertAuthor.password).then(function(token) {
+      console.log(upsertAuthor.username + " " + upsertAuthor.password);
+      document.cookie = "token=" + token.token;
+      // location.reload();
+    });
+  
 
     // submitAccount({
     //   name: nameInput
