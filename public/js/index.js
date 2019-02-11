@@ -9,57 +9,57 @@ let $password = $("#password");
 let $submitBtn = $("#submit");
 
 // The API object contains methods for each kind of request we'll make
-let API = {
-  authenticateUser: function(username, password) {
-    console.log(username + " " + password);
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "models/index.js",
-      data: JSON.stringify(
-        {
-          username: username,
-          password: password
-        })
-    });
-  },
-  saveExample: function(example) {
-		console.log('TCL: example', example)
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  //this grabs the cookie that we stored for the user in the browser
-  getExamples: function() {
-    let token = document.cookie.split(";")
-    .filter(
-      function(element) {
-        return element.indexOf('token=') === 0
-      }
-    )[0].split("=")[1];
-    return $.ajax({
-      url: "api/examples",
-      type: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      }
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
+// let API = {
+//   authenticateUser: function(username, password) {
+//     console.log(username + " " + password);
+//     return $.ajax({
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       type: "POST",
+//       url: "models/index.js",
+//       data: JSON.stringify(
+//         {
+//           username: username,
+//           password: password
+//         })
+//     });
+//   },
+//   saveExample: function(example) {
+// 		console.log('TCL: example', example)
+//     return $.ajax({
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       type: "POST",
+//       url: "api/examples",
+//       data: JSON.stringify(example)
+//     });
+//   },
+//   //this grabs the cookie that we stored for the user in the browser
+//   getExamples: function() {
+//     let token = document.cookie.split(";")
+//     .filter(
+//       function(element) {
+//         return element.indexOf('token=') === 0
+//       }
+//     )[0].split("=")[1];
+//     return $.ajax({
+//       url: "api/examples",
+//       type: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Authorization": "Bearer " + token
+//       }
+//     });
+//   },
+//   deleteExample: function(id) {
+//     return $.ajax({
+//       url: "api/examples/" + id,
+//       type: "DELETE"
+//     });
+//   }
+// };
 
 // refreshExamples gets new examples from the db and repopulates the list
 let refreshExamples = function() {
@@ -102,7 +102,7 @@ let handleFormSubmit = function(event) {
   API.authenticateUser(username, password).then(function(token) {
     console.log(username + " " + password);
     document.cookie = "token=" + token.token;
-    location.reload();
+    location.redirect('/daily');
   });
 
   $username.val("");

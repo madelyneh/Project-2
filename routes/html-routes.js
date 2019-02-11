@@ -16,6 +16,9 @@ module.exports = function(app) {
 
   // index route loads view.html
   app.get("/", function(req, res) {
+    if (req.user) {
+      res.redirect('/daily');
+    }
     res.sendFile(path.join(__dirname, "../public/author-manager.html"));
   });
 

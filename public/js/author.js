@@ -14,19 +14,43 @@ $(document).ready(function() {
   // Getting the initial list of Authors
   getAuthors();
 
+  let API = {
+    authenticateUser: function(username, password) {
+      console.log(username + " " + password);
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "api/auth",
+        data: JSON.stringify(
+          {
+            username: username,
+            password: password
+          })
+      });
+    }
+  };
+
   // A function to handle what happens when the form is submitted to create a new Author
   function handleAuthorFormSubmit(event) {
     event.preventDefault();
+    
+    // TODO are we using the full name or both the first and last name?
+    var nameInput = $("#author-full-name").val().trim();
+    var username = $("#author-username").val().trim();
+    var password = $("#author-password").val().trim();
+    var birthday = $("#author-birthday").val().trim();
+  
     // Don't do anything if the name fields hasn't been filled out
-    if (
-      !nameInput
-        .val()
-        .trim()
-        .trim()
-    ) {
+    // TODO turn this back on when we figure out which name we are using
+    if (!nameInput) {
       return;
     }
+
     // Calling the upsertAuthor function and passing in the value of the name input
+
+    // TODO turn back on after test
     upsertAuthor({
       name: nameInput.val().trim(),
       lastName: lastName.val().trim(),
@@ -35,12 +59,12 @@ $(document).ready(function() {
       password: password.val().trim()
     });
 
-    // !!!check this to verify everthing is working properly
-    API.authenticateUser(upsertAuthor.username, upsertAuthor.password).then(function(token) {
-      console.log(upsertAuthor.username + " " + upsertAuthor.password);
+    API.authenticateUser(username, password).then(function(token) {
+      console.log(token);
       document.cookie = "token=" + token.token;
-      // location.reload();
+      // window.location.href = '/daily';
     });
+  };
   
 
     // submitAccount({
@@ -49,7 +73,7 @@ $(document).ready(function() {
     //     .val()
     //     .trim(),
     //     });
-  }
+  
 
   // A function for creating an author. Calls getAuthors upon completion
   function upsertAuthor(authorData) {
