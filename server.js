@@ -91,6 +91,7 @@ app.set("view engine", "handlebars");
 require("./routes/html-routes.js")(app);
 require("./routes/author-api-routes.js")(app);
 require("./routes/post-api-routes.js")(app);
+require("./routes/weekly-post-routes.js")(app);
 
 var syncOptions = { force: false };
 

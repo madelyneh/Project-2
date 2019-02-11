@@ -29,6 +29,16 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/weekly", function(req, res) {
+    // res.sendFile(path.join(__dirname, "../public/cms.html"));
+    db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+      res.render("weekly", {
+        example: dbExample
+      });
+    });
+  });
+
+
   // blog route loads blog.html
   app.get("/blog", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/blog.html"));
@@ -42,6 +52,10 @@ module.exports = function(app) {
 
   app.get("/post", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/cms.html"));
+  });
+
+  app.get("/weeklyPost", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/weekly.html"));
   });
 
 };
