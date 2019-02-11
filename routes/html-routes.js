@@ -20,7 +20,7 @@ module.exports = function(app) {
   });
 
   // cms route loads cms.html
-  app.get("/cms", function(req, res) {
+  app.get("/daily", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/cms.html"));
     db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("daily", {
@@ -38,6 +38,10 @@ module.exports = function(app) {
   // authors route loads author-manager.html
   app.get("/authors", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/author-manager.html"));
+  });
+
+  app.get("/post", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/cms.html"));
   });
 
 };

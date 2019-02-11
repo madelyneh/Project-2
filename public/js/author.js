@@ -52,7 +52,7 @@ $(document).ready(function() {
   // Function for creating a new list row for authors
   function createAuthorRow(authorData) {
     console.log("**************************" + authorData.birthday);;
-    window.location.href = "/blog?author_id=" + authorData.id;
+    window.location.href = "/daily?author_id=" + authorData.id;
 
     var newTr = $("<tr>");
     newTr.data("author", authorData);
