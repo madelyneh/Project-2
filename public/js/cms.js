@@ -48,11 +48,6 @@ $(document).ready(function () {
       highlight: $highlight.val().trim(),
       positive: $positiveText.val().trim(),
       negative: $negativeText.val().trim(),
-      // option1: $option1.val().trim(),
-      // option2: $option2.val().trim(),
-      // option3: $option3.val().trim(),
-      // music: $music.val().trim(),
-      // video: $video.val().trim(),
       AuthorId: authorId
 
     };

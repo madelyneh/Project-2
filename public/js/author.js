@@ -4,7 +4,7 @@ $(document).ready(function() {
   var lastName = $("#author-last");
   var username = $("#author-username");
   var password = $("#author-password");
-  var birthday = $("#author-birthday");;
+  var birthday = $("#author-birthday");
   var authorList = $("tbody");
   var authorContainer = $(".author-container");
   // Adding event listeners to the form to create a new object, and the button to delete
@@ -35,13 +35,6 @@ $(document).ready(function() {
       birthday: birthday.val().trim(),
       password: password.val().trim()
     });
-
-    // submitAccount({
-    //   name: nameInput
-    // window.location.href = "localhost:8000/blog?author_id=" + authorData.id;
-    //     .val()
-    //     .trim(),
-    //     });
   }
 
   // A function for creating an author. Calls getAuthors upon completion
@@ -124,8 +117,7 @@ $(document).ready(function() {
     $.ajax({
       method: "DELETE",
       url: "/api/authors/" + id
-    })
-      .then(getAuthors);
+    }).then(getAuthors);
   }
 });
 

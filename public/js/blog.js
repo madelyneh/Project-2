@@ -98,48 +98,46 @@ $(document).ready(function() {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-header bg-transparent");
     var newCardTimer = $("<div>");
-    newCardTimer.addClass("dailyTimeRow");
+    newCardTimer.addClass("dailyTimeRow row");
     var newSpansTime1 = $("<span>");
-    // newSpansTime1.text("06:00");
+    newSpansTime1.addClass("col-sm");
+    newSpansTime1.text("06:00");
     var newSpansTime2 = $("<span>");
-    newSpansTime2.addClass("dateStamp");
-    newSpansTime2.text(post.createdAt);
+    newSpansTime2.addClass("dateStamp col-sm");
+    newSpansTime2.text("11475");
     var newSpansTime3 = $("<span>");
-    // newSpansTime3.text("12:00");
-
+    newSpansTime3.addClass("col-sm");
+    newSpansTime3.text("12:00");
     newCardTimer
       .append(newSpansTime1)
       .append(newSpansTime2)
       .append(newSpansTime3);
     newPostCardHeading.append(newCardTimer);
-
     //---------------------------------------------
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-body");
     var newContentSection = $("<div>");
     newContentSection.addClass("contentSection");
-
     var newSpanContent1 = $("<span>");
     newSpanContent1.addClass("contentSection");
     newSpanContent1.html(
-      "<i class='fas fa-flag'></i><strong>Highlight:</strong>" + post.highlight
+      "<i class='fas fa-flag icon'></i><strong>Highlight: </strong>" + post.highlight
     );
     var newLineBrake1 = $("<br>");
     var newSpanContent2 = $("<span>114500");
     newSpanContent2.addClass("contentSection");
     newSpanContent2.html(
-      "<i class='fas fa-arrow-up'></i><strong>Positive:</strong>" +
+      "<i class='fas fa-arrow-up icon'></i><strong>Positive: </strong>" +
         post.positive
     );
     var newLineBrake2 = $("<br>");
     var newSpanContent3 = $("<span>12:00");
     newSpanContent3.addClass("contentSection");
     newSpanContent3.html(
-      "<i class='fas fa-arrow-down'></i><strong>Negative:</strong>" +
+      "<i class='fas fa-arrow-down icon'></i><strong>Negative: </strong>" +
         post.negative
     );
     var newLineBrake3 = $("<br>");
-
     newContentSection
       .append(newSpanContent1)
       .append(newLineBrake1)
@@ -148,26 +146,46 @@ $(document).ready(function() {
       .append(newSpanContent3)
       .append(newLineBrake3);
     newPostCardBody.append(newContentSection);
-
     //---------------------------------------
-
-    var newCardFooter = $("<div>");
-    newCardFooter.addClass("card-footer habitsRow bg-transparent")
-    var newCardFooterInner = $("<div>");
-    newCardFooterInner.html(
-      "<span><i class='fas fa-running'></i></span>" +
-        "<span><i class='fas fa-dumbbell'></i></span>" +
-        "<span><i class='fas fa-tint'></i></span>"
-    );
+    // var newCardFooter = $("<div>");
+    // newCardFooter.addClass("card-footer bg-transparent");
+    // var newCardFooterInner = $("<div>");
+    // newCardFooterInner.addClass("habitsRow row");
+    // newCardFooterInner.html(
+    //   "<span><i class='fas fa-running'></i></span>" +
+    //     "<span><i class='fas fa-dumbbell'></i></span>" +
+    //     "<span><i class='fas fa-tint'></i></span>"
+    // );
+    // newCardFooterInner.addClass("col-sm");
     // new Andrew work
-
+    var newCardFooter = $("<div>");
+    newCardFooter.addClass("card-footer habitsRow bg-transparent");
+    var newCardFooterInner= $("<div>");
+    newCardFooterInner.addClass("row");
+    var newCardFooterInner1 = $("<span>");
+    newCardFooterInner1.addClass("col-sm");
+    newCardFooterInner1.html("<i class='fas fa-running'></i>");
+    var newCardFooterInner2 = $("<span>");
+    newCardFooterInner2.addClass("col-sm");
+    newCardFooterInner2.html("<i class='fas fa-dumbbell'></i>");
+    var newCardFooterInner3 = $("<span>");
+    newCardFooterInner3.addClass("col-sm");
+    newCardFooterInner3.html("<i class='fas fa-tint'></i>");
+    newCardFooterInner
+      .append(newCardFooterInner1)
+      .append(newCardFooterInner2)
+      .append(newCardFooterInner3);
+    newCardFooter.append(newCardFooterInner);
     // newPostCardBody.append(newContentSection);
     // newPostCardHeading.append(newCardTimer);
-    newCardFooter.append(newCardFooterInner);
+    // newCardFooter.append(newCardFooterInner);
     newPostCard
       .append(newPostCardHeading)
       .append(newPostCardBody)
       .append(newCardFooter);
+    console.log(
+      "---------------------------------new post card: " + newPostCard
+    );
     
     // var newPostTitle = $("<h2>");
     // var newPostDate = $("<small>");
