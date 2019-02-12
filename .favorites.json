@@ -1,0 +1,26 @@
+[
+    {
+        "type": "File",
+        "name": "/Users/Madelyn/Documents/GitHub/Project-2/models/user.js",
+        "parent_id": null,
+        "workspaceRoot": "/Users/Madelyn/Documents/GitHub/Project-2",
+        "workspacePath": "models/user.js",
+        "id": "IVu3vqb0OLiUJFX8"
+    },
+    {
+        "type": "File",
+        "name": "/Users/Madelyn/Documents/GitHub/Project-2/public/js/index.js",
+        "parent_id": null,
+        "workspaceRoot": "/Users/Madelyn/Documents/GitHub/Project-2",
+        "workspacePath": "public/js/index.js",
+        "id": "HUSNJLdV8RBZGawK"
+    },
+    {
+        "type": "File",
+        "name": "/Users/Madelyn/Documents/GitHub/Project-2/routes/apiRoutes.js",
+        "parent_id": null,
+        "workspaceRoot": "/Users/Madelyn/Documents/GitHub/Project-2",
+        "workspacePath": "routes/apiRoutes.js",
+        "id": "vU1MYzDNFlXOnwpu"
+    }
+]

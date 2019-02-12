@@ -23,19 +23,9 @@ module.exports = function(sequelize, DataTypes) {
   Author.associate = function(models) {
     // Associating Author with Posts
     // When an Author is deleted, also delete any associated Posts
-    Author.hasMany(models.Post, {
+    Author.hasMany(models.Post, models.Weekly, {
       onDelete: "cascade"
     });
   };
-
-  Author.prototype.validatePassword = function(password) {
-    return bcrypt.compareSync(
-        password,
-        this.password
-    );
-  };
-
-  Author.sync();
-
   return Author;
 };
