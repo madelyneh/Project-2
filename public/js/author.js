@@ -51,7 +51,6 @@ $(document).ready(function() {
 
   // Function for creating a new list row for authors
   function createAuthorRow(authorData) {
-    console.log("**************************" + authorData.birthday);;
     window.location.href = "/daily?author_id=" + authorData.id;
 
     var newTr = $("<tr>");
@@ -101,7 +100,6 @@ $(document).ready(function() {
       .remove();
     authorContainer.children(".alert").remove();
     if (rows.length) {
-      console.log(rows);
       authorList.prepend(rows);
     } else {
       renderEmpty();

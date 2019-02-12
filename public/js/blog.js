@@ -33,9 +33,7 @@ $(document).ready(function() {
     if (url.indexOf("?author_id=") !== -1) {
       authorId = url.split("=")[1];
     }
-    console.log("!!!!!!!! " + authorId);
     $.get("/api/posts?author_id=" + authorId, function(data) {
-      console.log("Posts", data.highlight);
       window.location.href = "/post?author_id=" + authorId;
     });
   }
@@ -47,7 +45,6 @@ $(document).ready(function() {
       authorId = "?author_id=" + authorId;
     }
     $.get("/api/posts" + authorId, function(data) {
-      console.log("Posts", data);
       posts = data;
       if (!posts || !posts.length) {
         displayEmpty(author);
@@ -90,8 +87,9 @@ $(document).ready(function() {
     //   "Friday",
     //   "Saturday"
     // ];
-    // var today = days[formattedDate.getDay()];
     // formattedDate = moment(formattedDate).format("MMMM Do YYYY");
+    // var today = days[formattedDate.getDay()];
+
 
     var newPostCard = $("<div>");
     newPostCard.addClass("card mb-3 col-sm-12 col-lg-6 col-xl-4");
@@ -102,12 +100,12 @@ $(document).ready(function() {
     var newCardTimer = $("<div>");
     newCardTimer.addClass("dailyTimeRow");
     var newSpansTime1 = $("<span>");
-    newSpansTime1.text("06:00");
+    // newSpansTime1.text("06:00");
     var newSpansTime2 = $("<span>");
     newSpansTime2.addClass("dateStamp");
-    newSpansTime2.text("11475");
+    newSpansTime2.text(post.createdAt);
     var newSpansTime3 = $("<span>");
-    newSpansTime3.text("12:00");
+    // newSpansTime3.text("12:00");
 
     newCardTimer
       .append(newSpansTime1)
@@ -170,15 +168,11 @@ $(document).ready(function() {
       .append(newPostCardHeading)
       .append(newPostCardBody)
       .append(newCardFooter);
-    console.log(
-      "---------------------------------new post card: " + newPostCard
-    );
+    
     // var newPostTitle = $("<h2>");
     // var newPostDate = $("<small>");
     // var newPostAuthor = $("<h5>");
-    // console.log("*************************" + post.Author.name);
     // authID.push(post.Author.id);
-    // console.log("+++++++++++++" + authID);
     // newPostAuthor.text(
     //   "Written by: " + post.Author.name /**here was post.Author.name */
     // );
@@ -187,7 +181,6 @@ $(document).ready(function() {
     //   color: "blue",
     //   "margin-top": "-10px"
     // });
-    // console.log(post[0].Author.name)
     // var highlight = $("<p>");
     // var positive = $("<p>");
     // var negative = $("<p>");
@@ -224,7 +217,6 @@ $(document).ready(function() {
     // newPostCardBody.append(option3);
     // newPostCardBody.append(music);
     // newPostCardBody.append(video);
-    // console.log(post.AuthorId);
     // newPostCard.append(newPostCardHeading);
     // newPostCard.append(newPostCardBody);
     // newPostCard.data("post", post);
@@ -250,28 +242,27 @@ $(document).ready(function() {
   }
 
   // This function displays a message when there are no posts
-  function displayEmpty(id) {
-    var query = window.location.search;
-    console.log("==============this is query: " + query);
-    var partial = "";
-    // id = id
+  // function displayEmpty(id) {
+  //   var query = window.location.search;
+  //   var partial = "";
+  //   // id = id
 
-    if (id) {
-      partial = " for Author " + id;
-    }
-    blogContainer.empty();
-    var messageH2 = $("<h2>");
-    messageH2.css({
-      "text-align": "center",
-      "margin-top": "50px"
-    });
-    messageH2.html(
-      "No posts yet" +
-        partial +
-        ", navigate <a href='/post" +
-        query +
-        "'>here</a> in order to get started."
-    );
-    blogContainer.append(messageH2);
-  }
+  //   if (id) {
+  //     partial = " for Author " + id;
+  //   }
+  //   blogContainer.empty();
+  //   var messageH2 = $("<h2>");
+  //   messageH2.css({
+  //     "text-align": "center",
+  //     "margin-top": "50px"
+  //   });
+  //   messageH2.html(
+  //     "No posts yet" +
+  //       partial +
+  //       ", navigate <a href='/post" +
+  //       query +
+  //       "'>here</a> in order to get started."
+  //   );
+  //   blogContainer.append(messageH2);
+  // }
 });

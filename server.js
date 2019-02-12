@@ -9,7 +9,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 // var logger = require('morgan');
 // var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 
 var db = require("./models");
 
@@ -44,7 +44,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //   function(username, password, cd) {
 //     db.User.findOne({ where:{ username: username }}).then(
 //       function(user) {
-//         console.log(user);
 //         if (!user || !user.validatePassword(password)) {
 //           return cd(null, false, {message: 'Incorrect email or password.'});
 //         };
@@ -66,7 +65,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //       try {
 //         return done(null, jwtPayload)
 //       } catch (error) {
-//         console.log(error);
 //         done(error);
 //       }
 //     }

@@ -104,6 +104,15 @@
   /* margin-bottom: 10px; */
 }
 
+a.carousel-control-next {
+  color: grey;
+}
+
+a.carousel-control-prev {
+  color: grey;
+}
+
+
 .add {
   cursor: pointer;
 }
@@ -117,3 +126,63 @@
   color: gray;
   text-align: center;
 } */
+
+
+.icon {
+  margin-right: 5px;
+}
+/* Login screen. */
+.login {
+  background-image: linear-gradient(#E4ECFC, #B2A7BB);
+  border-radius: 65px;
+  margin: auto;
+  margin-top: 75px;
+  margin-bottom: 20px;
+  padding: 35px;
+}
+#signUp {
+  line-height: 1em;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+#submit {
+  color: #fff;
+  background-color: #5E5E5E;
+  border-color: white;
+  font-weight: 300;
+  width: 150px;
+  margin:10px;
+  margin: auto;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  border-radius: .75rem;
+}
+.login {
+  padding-bottom: 0px;
+}
+.form-control {
+  border-radius: .75rem;
+}
+label {
+  margin-left: 13px;
+}
+#clickHere {
+  color: #5E5E5E;
+  /* margin-top: 15px;
+  padding-top: 10px; */
+}
+.carousel {
+  position: relative;
+  width: 500px;
+  /* margin-top: 75px; */
+  margin: auto;
+  margin-top: 75px;
+}
+.carousel-control-next-icon {
+  background-image: url('./icons/required/caret-right.svg');
+}
+.carousel-control-prev-icon {
+  background-image: url('./icons/required/caret-left.svg');
+}
