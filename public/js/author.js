@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // Getting references to the name input and author container, as well as the table body
-  var nameInput = $("#author-full-name");
+  var nameInput = $("#author-name");
+  var lastName = $("#author-last");
   var username = $("#author-username");
   var password = $("#author-password");
   var birthday = $("#author-birthday");;
@@ -21,8 +22,7 @@ $(document).ready(function() {
     if (
       !nameInput
         .val()
-        .trim()
-        .trim()
+        
     ) {
       return;
     }
