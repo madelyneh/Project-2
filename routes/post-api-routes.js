@@ -1,11 +1,4 @@
-// *********************************************************************************
-// api-routes.js - this file offers a set of routes for displaying and saving data to the db
-// *********************************************************************************
 
-// Dependencies
-// =============================================================
-
-// Requiring our models
 var db = require("../models");
 
 // Routes
@@ -17,9 +10,7 @@ module.exports = function(app) {
     if (req.query.author_id) {
       query.AuthorId = req.query.author_id;
     }
-    // Here we add an "include" property to our options in our findAll query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Author
+
     db.Post.findAll({
       where: query,
       include: [db.Author]
@@ -28,9 +19,6 @@ module.exports = function(app) {
     });
   });
 
-  /* =============================================================
-
-   =============================================================*/
 
   // Get route for retrieving a single post
   app.get("/api/posts/:id", function(req, res) {
@@ -53,6 +41,7 @@ module.exports = function(app) {
       res.json(dbPost);
     });
   });
+  
 
   // DELETE route for deleting posts
   app.delete("/api/posts/:id", function(req, res) {

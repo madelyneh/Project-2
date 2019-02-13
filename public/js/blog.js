@@ -33,9 +33,7 @@ $(document).ready(function() {
     if (url.indexOf("?author_id=") !== -1) {
       authorId = url.split("=")[1];
     }
-    console.log("!!!!!!!! " + authorId);
     $.get("/api/posts?author_id=" + authorId, function(data) {
-      console.log("Posts", data.highlight);
       window.location.href = "/post?author_id=" + authorId;
     });
   }
@@ -47,7 +45,6 @@ $(document).ready(function() {
       authorId = "?author_id=" + authorId;
     }
     $.get("/api/posts" + authorId, function(data) {
-      console.log("Posts", data);
       posts = data;
       if (!posts || !posts.length) {
         displayEmpty(author);
@@ -90,8 +87,9 @@ $(document).ready(function() {
     //   "Friday",
     //   "Saturday"
     // ];
-    // var today = days[formattedDate.getDay()];
     // formattedDate = moment(formattedDate).format("MMMM Do YYYY");
+    // var today = days[formattedDate.getDay()];
+
 
     var newPostCard = $("<div>");
     newPostCard.addClass("card mb-3 col-sm-12 col-lg-6 col-xl-4");
@@ -100,48 +98,46 @@ $(document).ready(function() {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-header bg-transparent");
     var newCardTimer = $("<div>");
-    newCardTimer.addClass("dailyTimeRow");
+    newCardTimer.addClass("dailyTimeRow row");
     var newSpansTime1 = $("<span>");
+    newSpansTime1.addClass("col-sm");
     newSpansTime1.text("06:00");
     var newSpansTime2 = $("<span>");
-    newSpansTime2.addClass("dateStamp");
+    newSpansTime2.addClass("dateStamp col-sm");
     newSpansTime2.text("11475");
     var newSpansTime3 = $("<span>");
+    newSpansTime3.addClass("col-sm");
     newSpansTime3.text("12:00");
-
     newCardTimer
       .append(newSpansTime1)
       .append(newSpansTime2)
       .append(newSpansTime3);
     newPostCardHeading.append(newCardTimer);
-
     //---------------------------------------------
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-body");
     var newContentSection = $("<div>");
     newContentSection.addClass("contentSection");
-
     var newSpanContent1 = $("<span>");
     newSpanContent1.addClass("contentSection");
     newSpanContent1.html(
-      "<i class='fas fa-flag'></i><strong>Highlight:</strong>" + post.highlight
+      "<i class='fas fa-flag icon'></i><strong>Highlight: </strong>" + post.highlight
     );
     var newLineBrake1 = $("<br>");
     var newSpanContent2 = $("<span>114500");
     newSpanContent2.addClass("contentSection");
     newSpanContent2.html(
-      "<i class='fas fa-arrow-up'></i><strong>Positive:</strong>" +
+      "<i class='fas fa-arrow-up icon'></i><strong>Positive: </strong>" +
         post.positive
     );
     var newLineBrake2 = $("<br>");
     var newSpanContent3 = $("<span>12:00");
     newSpanContent3.addClass("contentSection");
     newSpanContent3.html(
-      "<i class='fas fa-arrow-down'></i><strong>Negative:</strong>" +
+      "<i class='fas fa-arrow-down icon'></i><strong>Negative: </strong>" +
         post.negative
     );
     var newLineBrake3 = $("<br>");
-
     newContentSection
       .append(newSpanContent1)
       .append(newLineBrake1)
@@ -150,22 +146,39 @@ $(document).ready(function() {
       .append(newSpanContent3)
       .append(newLineBrake3);
     newPostCardBody.append(newContentSection);
-
     //---------------------------------------
-
-    var newCardFooter = $("<div>");
-    newCardFooter.addClass("card-footer habitsRow bg-transparent")
-    var newCardFooterInner = $("<div>");
-    newCardFooterInner.html(
-      "<span><i class='fas fa-running'></i></span>" +
-        "<span><i class='fas fa-dumbbell'></i></span>" +
-        "<span><i class='fas fa-tint'></i></span>"
-    );
+    // var newCardFooter = $("<div>");
+    // newCardFooter.addClass("card-footer bg-transparent");
+    // var newCardFooterInner = $("<div>");
+    // newCardFooterInner.addClass("habitsRow row");
+    // newCardFooterInner.html(
+    //   "<span><i class='fas fa-running'></i></span>" +
+    //     "<span><i class='fas fa-dumbbell'></i></span>" +
+    //     "<span><i class='fas fa-tint'></i></span>"
+    // );
+    // newCardFooterInner.addClass("col-sm");
     // new Andrew work
-
+    var newCardFooter = $("<div>");
+    newCardFooter.addClass("card-footer habitsRow bg-transparent");
+    var newCardFooterInner= $("<div>");
+    newCardFooterInner.addClass("row");
+    var newCardFooterInner1 = $("<span>");
+    newCardFooterInner1.addClass("col-sm");
+    newCardFooterInner1.html("<i class='fas fa-running'></i>");
+    var newCardFooterInner2 = $("<span>");
+    newCardFooterInner2.addClass("col-sm");
+    newCardFooterInner2.html("<i class='fas fa-dumbbell'></i>");
+    var newCardFooterInner3 = $("<span>");
+    newCardFooterInner3.addClass("col-sm");
+    newCardFooterInner3.html("<i class='fas fa-tint'></i>");
+    newCardFooterInner
+      .append(newCardFooterInner1)
+      .append(newCardFooterInner2)
+      .append(newCardFooterInner3);
+    newCardFooter.append(newCardFooterInner);
     // newPostCardBody.append(newContentSection);
     // newPostCardHeading.append(newCardTimer);
-    newCardFooter.append(newCardFooterInner);
+    // newCardFooter.append(newCardFooterInner);
     newPostCard
       .append(newPostCardHeading)
       .append(newPostCardBody)
@@ -173,12 +186,11 @@ $(document).ready(function() {
     console.log(
       "---------------------------------new post card: " + newPostCard
     );
+    
     // var newPostTitle = $("<h2>");
     // var newPostDate = $("<small>");
     // var newPostAuthor = $("<h5>");
-    // console.log("*************************" + post.Author.name);
     // authID.push(post.Author.id);
-    // console.log("+++++++++++++" + authID);
     // newPostAuthor.text(
     //   "Written by: " + post.Author.name /**here was post.Author.name */
     // );
@@ -187,7 +199,6 @@ $(document).ready(function() {
     //   color: "blue",
     //   "margin-top": "-10px"
     // });
-    // console.log(post[0].Author.name)
     // var highlight = $("<p>");
     // var positive = $("<p>");
     // var negative = $("<p>");
@@ -224,7 +235,6 @@ $(document).ready(function() {
     // newPostCardBody.append(option3);
     // newPostCardBody.append(music);
     // newPostCardBody.append(video);
-    // console.log(post.AuthorId);
     // newPostCard.append(newPostCardHeading);
     // newPostCard.append(newPostCardBody);
     // newPostCard.data("post", post);
@@ -250,28 +260,27 @@ $(document).ready(function() {
   }
 
   // This function displays a message when there are no posts
-  function displayEmpty(id) {
-    var query = window.location.search;
-    console.log("==============this is query: " + query);
-    var partial = "";
-    // id = id
+  // function displayEmpty(id) {
+  //   var query = window.location.search;
+  //   var partial = "";
+  //   // id = id
 
-    if (id) {
-      partial = " for Author " + id;
-    }
-    blogContainer.empty();
-    var messageH2 = $("<h2>");
-    messageH2.css({
-      "text-align": "center",
-      "margin-top": "50px"
-    });
-    messageH2.html(
-      "No posts yet" +
-        partial +
-        ", navigate <a href='/post" +
-        query +
-        "'>here</a> in order to get started."
-    );
-    blogContainer.append(messageH2);
-  }
+  //   if (id) {
+  //     partial = " for Author " + id;
+  //   }
+  //   blogContainer.empty();
+  //   var messageH2 = $("<h2>");
+  //   messageH2.css({
+  //     "text-align": "center",
+  //     "margin-top": "50px"
+  //   });
+  //   messageH2.html(
+  //     "No posts yet" +
+  //       partial +
+  //       ", navigate <a href='/post" +
+  //       query +
+  //       "'>here</a> in order to get started."
+  //   );
+  //   blogContainer.append(messageH2);
+  // }
 });
