@@ -33,7 +33,7 @@ $(document).ready(function() {
     if (url.indexOf("?author_id=") !== -1) {
       authorId = url.split("=")[1];
     }
-    console.log("!!!!!!!! " + authorId);
+    // console.log("!!!!!!!! " + authorId);
     window.location.href = "/post?author_id=" + authorId;
   }
   // grabs the author's information from data base.
@@ -62,7 +62,7 @@ $(document).ready(function() {
       authorId = "/?author_id=" + authorId;
     }
     $.get("/api/posts" + authorId, function(data) {
-      console.log("Posts", data);
+      // console.log("Posts", data);
       posts = data;
       if (!posts || !posts.length) {
         displayEmpty(author);
@@ -120,9 +120,9 @@ $(document).ready(function() {
     var newPostTitle = $("<h2>");
     var newPostDate = $("<small>");
     var newPostAuthor = $("<h5>");
-    console.log("*************************" + post.Author.name);
+    // console.log("*************************" + post.Author.name);
     authID.push(post.Author.id);
-    console.log("+++++++++++++" + authID);
+    // console.log("+++++++++++++" + authID);
     newPostAuthor.text(
       "Written by: " + post.Author.name /**here was post.Author.name */
     );
@@ -172,7 +172,7 @@ $(document).ready(function() {
     newPostCardBody.append(option3);
     newPostCardBody.append(music);
     newPostCardBody.append(video);
-    console.log(post.AuthorId);
+    // console.log(post.AuthorId);
     newPostCard.append(newPostCardHeading);
     newPostCard.append(newPostCardBody);
     newPostCard.data("post", post);
@@ -200,7 +200,7 @@ $(document).ready(function() {
   // This function displays a message when there are no posts
   function displayEmpty(id) {
     var query = window.location.search;
-    console.log("==============this is query: " + query);
+    // console.log("==============this is query: " + query);
     var partial = "";
     // id = id
 

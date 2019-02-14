@@ -1,6 +1,7 @@
-$(document).ready(function() {
+ $(document).ready(function() {
   // Getting references to the name input and author container, as well as the table body
-  var nameInput = $("#author-full-name");
+  var nameInput = $("#author-name");
+  var lastName = $("#author-last");  
   var username = $("#author-username");
   var password = $("#author-password");
   var birthday = $("#author-birthday");;
@@ -12,11 +13,12 @@ $(document).ready(function() {
   $(document).on("click", ".delete-author", handleDeleteButtonPress);
 
   // Getting the initial list of Authors
-  getAuthors();
+  // FIXME This isn't working properly on the log in page
+  // getAuthors();
 
   let API = {
     authenticateUser: function(username, password) {
-      console.log(username + " " + password);
+      console.log("Public Author.js 21" + username + " " + password);
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
@@ -37,7 +39,9 @@ $(document).ready(function() {
     event.preventDefault();
     
     // TODO are we using the full name or both the first and last name?
-    var nameInput = $("#author-full-name").val().trim();
+    var nameInput = $("#author-name").val().trim();
+    var lastName = $("#author-last").val().trim();
+		console.log('TCL: handleAuthorFormSubmit -> lastName', lastName)
     var username = $("#author-username").val().trim();
     var password = $("#author-password").val().trim();
     var birthday = $("#author-birthday").val().trim();
@@ -52,15 +56,15 @@ $(document).ready(function() {
 
     // TODO turn back on after test
     upsertAuthor({
-      name: nameInput.val().trim(),
-      lastName: lastName.val().trim(),
-      username: username.val().trim(),
-      birthday: birthday.val().trim(),
-      password: password.val().trim()
+      nameInput: nameInput,
+      lastName: lastName,
+      username: username,
+      birthday: birthday,
+      password: password
     });
 
     API.authenticateUser(username, password).then(function(token) {
-      console.log(token);
+      console.log("Public Author.js 66 Token: " + token.token);
       document.cookie = "token=" + token.token;
       // window.location.href = '/daily';
     });
@@ -81,31 +85,32 @@ $(document).ready(function() {
   }
 
   // Function for creating a new list row for authors
-  function createAuthorRow(authorData) {
-    console.log("**************************" + authorData.birthday);;
-    window.location.href = "/daily?author_id=" + authorData.id;
+  // TODO turned off to see what is breaking the code
+  // function createAuthorRow(authorData) {
+  //   console.log("**************************" + authorData.birthday);;
+  //   window.location.href = "/daily?author_id=" + authorData.id;
 
-    var newTr = $("<tr>");
-    newTr.data("author", authorData);
-    newTr.append("<td>" + authorData.name + "</td>");
-    if (authorData.Posts) {
-      newTr.append("<td> " + authorData.Posts.length + "</td>");
-    } else {
-      newTr.append("<td>0</td>");
-    }
-    newTr.append(
-      "<td><a href='/blog?author_id=" + authorData.id + "'>Go to Posts</a></td>"
-    );
-    newTr.append(
-      "<td><a href='/cms?author_id=" +
-        authorData.id +
-        "'>Create a Post</a></td>"
-    );
-    newTr.append(
-      "<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Author</a></td>"
-    );
-    return newTr;
-  }
+  //   var newTr = $("<tr>");
+  //   newTr.data("author", authorData);
+  //   newTr.append("<td>" + authorData.name + "</td>");
+  //   if (authorData.Posts) {
+  //     newTr.append("<td> " + authorData.Posts.length + "</td>");
+  //   } else {
+  //     newTr.append("<td>0</td>");
+  //   }
+  //   newTr.append(
+  //     "<td><a href='/blog?author_id=" + authorData.id + "'>Go to Posts</a></td>"
+  //   );
+  //   newTr.append(
+  //     "<td><a href='/cms?author_id=" +
+  //       authorData.id +
+  //       "'>Create a Post</a></td>"
+  //   );
+  //   newTr.append(
+  //     "<td><a style='cursor:pointer;color:red' class='delete-author'>Delete Author</a></td>"
+  //   );
+  //   return newTr;
+  // }
 
   // Function for retrieving authors and getting them ready to be rendered to the page
   function getAuthors() {
@@ -132,7 +137,7 @@ $(document).ready(function() {
       .remove();
     authorContainer.children(".alert").remove();
     if (rows.length) {
-      console.log(rows);
+      // console.log(rows);
       authorList.prepend(rows);
     } else {
       renderEmpty();

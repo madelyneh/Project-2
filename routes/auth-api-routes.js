@@ -7,9 +7,9 @@ module.exports = function(app) {
             'local', 
             {session: false}, 
             function(error, user, info) {
-                console.log("HERE")
+                console.log("auth-api 10");
                 if (error || !user) {
-                    console.log(error);
+                    console.log("auth-api 12: " + error);
                     return response.status(403);
                     
                     // .json({
@@ -21,8 +21,9 @@ module.exports = function(app) {
                 }
                 // console.log("HERE!")
                request.login(user, {session: false}, function(error) {
-                   console.log("LOGIN")
+                   console.log("auth-api 24: LOGIN");
                    if (error) {
+                       console.log('[auth-api-routes.js] Error on request.login', error);
                        response.send(error);
                    }
                    var sanitizedUser = {
@@ -36,7 +37,8 @@ module.exports = function(app) {
                    response.json(
                        {
                            user: sanitizedUser,
-                           token: token
+                           token: token,
+                           redirectUrl: '/daily'
                        }
                    );
                 });

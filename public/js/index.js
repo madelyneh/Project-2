@@ -100,7 +100,7 @@ let handleFormSubmit = function(event) {
 
 
   API.authenticateUser(username, password).then(function(token) {
-    console.log(username + " " + password);
+    console.log("Public Index 103: " + username + " " + password);
     document.cookie = "token=" + token.token;
     location.redirect('/daily');
   });

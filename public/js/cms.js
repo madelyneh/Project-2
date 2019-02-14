@@ -74,7 +74,7 @@ $(document).ready(function () {
     if (url.indexOf("?author_id=") !== -1) {
       authorId = url.split("=")[1];
     }
-    console.log("!!!!!!!! " + post.name);
+    // console.log("!!!!!!!! " + post.name);
     $.post("/api/posts", post, function () {
       window.location.href = "/daily?author_id="+authorId;
     });
@@ -95,7 +95,7 @@ $(document).ready(function () {
     }
     $.get(queryUrl, function (data) {
       if (data) {
-        console.log(data.AuthorId || data.id);
+        // console.log(data.AuthorId || data.id);
         // If this post exists, prefill our cms forms with its data
         titleInput.val(data.title);
         bodyInput.val(data.body);
@@ -123,8 +123,8 @@ $(document).ready(function () {
       rowsToAdd.push(createAuthorRow(data[i]));
     }
     authorSelect.empty();
-    console.log(rowsToAdd);
-    console.log(authorSelect);
+    // console.log(rowsToAdd);
+    // console.log(authorSelect);
     authorSelect.append(rowsToAdd);
     authorSelect.val(authorId);
   }

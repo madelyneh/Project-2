@@ -26,6 +26,7 @@ module.exports = function(app) {
     });
   });
 
+  // TODO What happens if author creation fails?
   app.post("/api/authors", function(req, res) {
     db.Author.create(req.body).then(function(dbAuthor) {
       res.json(dbAuthor);

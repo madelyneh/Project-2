@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 // *****************************************************************************
 // Server.js - This file is the initial starting point for the Node/Express server.
 //
@@ -37,10 +37,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
 app.use(function (req, res, next) {
-  if (req.user || req.url === '/api/auth') {
+  console.log(req.url);
+  if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
+    console.log('on to the next one');
     next();
   }
-  res.redirect("/author-manager.html");
+  // res.redirect("/author-manager.html");
 });
 
 passport.use(new LocalStrategy(
@@ -49,19 +51,20 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   function(username, password, done) {
-    console.log("Username:" + username + " Passoword: " + password);
+    console.log("Server 52: Username:" + username + " Password: " + password);
     db.Author.findOne({ where:{ username: username }}).then(
       function(user) {
-        console.log("___THIS IS THE PASSPORT___");
-        console.log(user);
+        console.log("[server.js] Passport Local Strategy");
+        console.log("Server 56: " + user);
         if (!user || !user.validatePassword(password)) {
+          console.log(`[server.js] couldn't find user`);
           return done(null, false, {message: 'Incorrect email or password.'});
         };
+        console.log('[server.js] Logged in');
         return done(null, user, {message: 'Logged in Successfully.'});
       }
     ).catch(error => {
       done(error);
-      throw error;
     });
   }
 ));

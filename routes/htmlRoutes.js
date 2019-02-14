@@ -9,7 +9,7 @@ module.exports = function(app) {
   app.get("/", function(request, response) {
     if (request.cookies.token) {
       let author = jwt.verify(request.cookie.token, 'your_jwt_secret');
-			console.log('TCL: author', author)
+			console.log('htmlRoutes: author', author)
       if (author) {
         db.Example.findAll({}).then(function(dbExamples) {
           return response.render("index", {
