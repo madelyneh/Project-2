@@ -35,14 +35,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
 app.use(function (req, res, next) {
   console.log(req.url);
   if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
     console.log('on to the next one');
-    next();
+    return next();
   }
-  // res.redirect("/author-manager.html");
+  return res.redirect("/author-manager.html");
 });
 
 passport.use(new LocalStrategy(
@@ -69,33 +70,28 @@ passport.use(new LocalStrategy(
   }
 ));
 
-// passport.use(
-//   new JWTStrategy({
-//     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-//     secretOrKey : 'your_jwt_secret'},
-//     function(jwtPayload, done) {
-//       //find current users information
-//       try {
-//         return done(null, jwtPayload)
-//       } catch (error) {
-//         console.log(error);
-//         done(error);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  new JWTStrategy({
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey : 'your_jwt_secret'},
+    function(jwtPayload, done) {
+      //find current users information
+      try {
+        return done(null, jwtPayload)
+      } catch (error) {
+        console.log(error);
+        done(error);
+      }
+    }
+  )
+);
 
 // Handlebars
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
-// Routes
-// let secureRoute = require("./routes/apiRoutes");
-// app.use('/api/examples', passport.authenticate('jwt', {session: false}), secureRoute);
-// require("./routes/htmlRoutes")(app);
-// require("./routes/authRoutes")(app);
 
-// Their new routes
+// routes
 require("./routes/html-routes.js")(app);
 require("./routes/author-api-routes.js")(app);
 require("./routes/post-api-routes.js")(app);

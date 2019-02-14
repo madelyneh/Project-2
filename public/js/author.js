@@ -38,23 +38,19 @@
   function handleAuthorFormSubmit(event) {
     event.preventDefault();
     
-    // TODO are we using the full name or both the first and last name?
     var nameInput = $("#author-name").val().trim();
     var lastName = $("#author-last").val().trim();
-		console.log('TCL: handleAuthorFormSubmit -> lastName', lastName)
     var username = $("#author-username").val().trim();
     var password = $("#author-password").val().trim();
     var birthday = $("#author-birthday").val().trim();
   
     // Don't do anything if the name fields hasn't been filled out
-    // TODO turn this back on when we figure out which name we are using
     if (!nameInput) {
       return;
     }
 
     // Calling the upsertAuthor function and passing in the value of the name input
 
-    // TODO turn back on after test
     upsertAuthor({
       nameInput: nameInput,
       lastName: lastName,
