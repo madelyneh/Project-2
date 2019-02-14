@@ -37,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
+app.use(passport.authenticate('jwt', { session: false }))
 app.use(function (req, res, next) {
   console.log(req.url);
   if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
@@ -53,6 +54,7 @@ passport.use(new LocalStrategy(
   },
   function(username, password, done) {
     console.log("Server 52: Username:" + username + " Password: " + password);
+    // TODO Make this into a reusable funtion that can then get called in the jwt call in the 'try' section to pull up the user.
     db.Author.findOne({ where:{ username: username }}).then(
       function(user) {
         console.log("[server.js] Passport Local Strategy");
@@ -72,11 +74,21 @@ passport.use(new LocalStrategy(
 
 passport.use(
   new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: function(req) {
+      var token = null;
+      if (req && req.cookies)
+      {
+          token = req.cookies['token'];
+      }
+      return token;
+    },
     secretOrKey : 'your_jwt_secret'},
     function(jwtPayload, done) {
       //find current users information
+      console.log('[server.js] JWT Strategy')
       try {
+        // TODO Put the 'get user' function here to pull up the user's info
+        console.log('In the try');
         return done(null, jwtPayload)
       } catch (error) {
         console.log(error);
