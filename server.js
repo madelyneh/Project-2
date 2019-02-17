@@ -54,7 +54,7 @@ passport.use(new LocalStrategy(
   },
   function(username, password, done) {
     console.log("Server 52: Username:" + username + " Password: " + password);
-    // TODO Make this into a reusable funtion that can then get called in the jwt call in the 'try' section to pull up the user.
+    // TODO Make this into a reusable function that can then get called in the jwt call in the 'try' section to pull up the user.
     db.Author.findOne({ where:{ username: username }}).then(
       function(user) {
         console.log("[server.js] Passport Local Strategy");
