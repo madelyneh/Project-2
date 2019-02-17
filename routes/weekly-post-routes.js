@@ -43,7 +43,7 @@ module.exports = function(app) {
   });
 
   // PUT route for updating posts
-  app.put("/api/weekls", function(req, res) {
+  app.put("/api/weekly", function(req, res) {
     db.Weekly.update(req.body, {
       where: {
         id: req.body.id
@@ -52,5 +52,4 @@ module.exports = function(app) {
       res.json(dbWeekly);
     });
   });
-
 };

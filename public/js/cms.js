@@ -7,11 +7,11 @@ $(document).ready(function () {
   var $highlight = $("#highlight");
   var $positiveText = $("#example-positive");
   var $negativeText = $("#example-negative");
-  var $option1 = $("#option1");
-  var $option2 = $("#option2");
-  var $option3 = $("#option3");
-  var $music = $("#music");
-  var $video = $("#video");
+  // var $option1 = $("#option1");
+  // var $option2 = $("#option2");
+  // var $option3 = $("#option3");
+  // var $music = $("#music");
+  // var $video = $("#video");
   // var $submitBtn = $("#submit");
   // Adding an event listener for when the form is submitted
   $(cmsForm).on("submit", handleFormSubmit);
@@ -48,11 +48,6 @@ $(document).ready(function () {
       highlight: $highlight.val().trim(),
       positive: $positiveText.val().trim(),
       negative: $negativeText.val().trim(),
-      option1: $option1.val().trim(),
-      option2: $option2.val().trim(),
-      option3: $option3.val().trim(),
-      music: $music.val().trim(),
-      video: $video.val().trim(),
       AuthorId: authorId
 
     };
@@ -74,7 +69,6 @@ $(document).ready(function () {
     if (url.indexOf("?author_id=") !== -1) {
       authorId = url.split("=")[1];
     }
-    console.log("!!!!!!!! " + post.name);
     $.post("/api/posts", post, function () {
       window.location.href = "/daily?author_id=" + authorId;
     });
@@ -95,7 +89,6 @@ $(document).ready(function () {
     }
     $.get(queryUrl, function (data) {
       if (data) {
-        console.log(data.AuthorId || data.id);
         // If this post exists, prefill our cms forms with its data
         titleInput.val(data.title);
         bodyInput.val(data.body);
@@ -123,8 +116,7 @@ $(document).ready(function () {
       rowsToAdd.push(createAuthorRow(data[i]));
     }
     authorSelect.empty();
-    console.log(rowsToAdd);
-    console.log(authorSelect);
+
     authorSelect.append(rowsToAdd);
     authorSelect.val(authorId);
   }
