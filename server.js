@@ -39,7 +39,6 @@ app.use(cookieParser());
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
 app.use(passport.authenticate('jwt', { session: false }))
 app.use(function (req, res, next) {
-  console.log(req.url);
   if (req.user) {
     console.log('on to the next one');
     return next();

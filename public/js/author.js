@@ -15,31 +15,53 @@ $(document).ready(function() {
   // Getting the initial list of Authors
   getAuthors();
 
+  let API = {
+    authenticateUser: function(username, password) {
+      console.log("Public Author.js 21" + username + " " + password);
+      return $.ajax({
+        headers: {
+          "Content-Type": "application/json"
+        },
+        type: "POST",
+        url: "api/auth",
+        data: JSON.stringify(
+          {
+            username: username,
+            password: password
+          })
+      });
+    }
+  };
+
+
   // A function to handle what happens when the form is submitted to create a new Author
   function handleAuthorFormSubmit(event) {
     event.preventDefault();
+
+    var nameInput = $("#author-name").val().trim();
+    var lastName = $("#author-last").val().trim();
+    var username = $("#author-username").val().trim();
+    var password = $("#author-password").val().trim();
+    var birthday = $("#author-birthday").val().trim();
+
     // Don't do anything if the name fields hasn't been filled out
-    if (
-      !nameInput
-        .val()
-        
-    ) {
+    if (!nameInput) {
       return;
     }
     // Calling the upsertAuthor function and passing in the value of the name input
     upsertAuthor({
-      name: nameInput.val().trim(),
-      lastName: lastName.val().trim(),
-      username: username.val().trim(),
-      birthday: birthday.val().trim(),
-      password: password.val().trim()
+      nameInput: nameInput,
+      lastName: lastName,
+      username: username,
+      birthday: birthday,
+      password: password
     });
 
     // !!!check this to verify everthing is working properly
     API.authenticateUser(upsertAuthor.username, upsertAuthor.password).then(function(token) {
       console.log(upsertAuthor.username + " " + upsertAuthor.password);
       document.cookie = "token=" + token.token;
-      // location.reload();
+      window.location.href = '/daily';
     });
   
 

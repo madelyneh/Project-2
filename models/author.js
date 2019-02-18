@@ -28,5 +28,15 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: "cascade"
     });
   };
+
+  Author.prototype.validatePassword = function(password) {
+    console.log('Models Author 32: validating password');
+    return bcrypt.compare(
+        password,
+        this.password
+    );
+  };
+  Author.sync();
+
   return Author;
 };
