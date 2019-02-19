@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
     // TODO dont let this go to the next if there is an error
     return next();
   }
-  return res.redirect("/");
+  // return res.redirect("/author-manager.html");
 });
 
 passport.use(new LocalStrategy(
