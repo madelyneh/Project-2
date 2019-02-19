@@ -57,11 +57,11 @@ $(document).ready(function() {
       password: password
     });
 
-    // !!!check this to verify everthing is working properly
+    // TODO do we always want to redirect to the /daily page after they have been authenticated
     API.authenticateUser(upsertAuthor.username, upsertAuthor.password).then(function(token) {
       console.log(upsertAuthor.username + " " + upsertAuthor.password);
       document.cookie = "token=" + token.token;
-      window.location.href = '/daily';
+      // window.location.href = '/daily';
     });
   
 
