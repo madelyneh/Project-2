@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 // *****************************************************************************
 // Server.js - This file is the initial starting point for the Node/Express server.
 //
@@ -37,10 +37,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
-app.use(passport.authenticate('jwt', { session: false }))
+// TODO Need to add put a rout here that you want to have auth
+app.use('/daily',passport.authenticate('jwt', { session: false }))
 app.use(function (req, res, next) {
   if (req.user) {
     console.log('on to the next one');
+    // TODO dont let this go to the next if there is an error
     return next();
   }
   return res.redirect("/author-manager.html");
