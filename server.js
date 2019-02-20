@@ -37,16 +37,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // This checks if the user is logged in or not. If they arent it will redirect to the login page
-// TODO Need to add put a rout here that you want to have auth
-app.use('/post',passport.authenticate('jwt', { session: false }))
-// app.use(function (req, res, next) {
-//   if (req.user) {
-//     console.log('on to the next one');
-//     // TODO dont let this go to the next if there is an error
-//     return next();
-//   }
-//   return res.redirect("/authors");
-// });
+app.use(passport.authenticate('jwt', { session: false }))
+app.use(function (req, res, next) {
+  if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
+    console.log('on to the next one');
+    // return res.redirect("/daily");
+    return next();
+  }
+  console.log("YOU SHALL NOT PASSSSSS");
+  return res.redirect("/");
+});
 
 passport.use(new LocalStrategy(
   {
@@ -56,20 +56,26 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     console.log("Server 52: Username:" + username + " Password: " + password);
     // TODO Make this into a reusable function that can then get called in the jwt call in the 'try' section to pull up the user.
-    db.Author.findOne({ where:{ username: username }}).then(
-      function(user) {
-        console.log("[server.js] Passport Local Strategy");
-        console.log("Server 56: " + user);
-        if (!user || !user.validatePassword(password)) {
-          console.log(`[server.js] couldn't find user`);
-          return done(null, false, {message: 'Incorrect email or password.'});
-        };
-        console.log('[server.js] Logged in');
-        return done(null, user, {message: 'Logged in Successfully.'});
-      }
-    ).catch(error => {
-      done(error);
-    });
+    db.Author.findOne({ where:{ username: username }})
+      .then(function(user) {
+          console.log("[server.js] Passport Local Strategy");
+          console.log("Server 56: " + user);
+          if (!user) {
+            // If there is no user a user needs to be made here
+            console.log("Server.js- 64. User: " + user);
+            return done(null, user, {message: 'Making a user.'});
+
+
+          } else if (!user.validatePassword(password)) {
+            return done(null, false, {message: 'Incorrect email or password.'});
+          }
+          console.log('[server.js] Logged in');
+          return done(null, user, {message: 'Logged in Successfully.'});
+        }
+      )
+      .catch(error => {
+        done(error);
+      });
   }
 ));
 
@@ -86,7 +92,7 @@ passport.use(
     secretOrKey : 'your_jwt_secret'},
     function(jwtPayload, done) {
       //find current users information
-      console.log('[server.js] JWT Strategy')
+      console.log('[server.js 95] ' + jwtPayload);
       try {
         // TODO Put the 'get user' function here to pull up the user's info
         console.log('In the try');
@@ -109,6 +115,8 @@ require("./routes/html-routes.js")(app);
 require("./routes/author-api-routes.js")(app);
 require("./routes/post-api-routes.js")(app);
 require("./routes/weekly-post-routes.js")(app);
+require("./routes/auth-api-routes.js")(app);
+
 
 var syncOptions = { force: false };
 
