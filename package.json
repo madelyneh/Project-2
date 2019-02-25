@@ -4,12 +4,11 @@
   "description": "Project 2 Starter",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit",
     "start": "node server.js",
     "watch": "nodemon server.js",
     "lint": "eslint **/*.js --quiet",
-    "fix": "eslint --fix .",
-    "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit"
+    "fix": "eslint --fix ."
   },
   "keywords": [],
   "author": "",
@@ -24,8 +23,9 @@
     "fs": "0.0.1-security",
     "fullcalendar": "^3.10.0",
     "jsonwebtoken": "^8.4.0",
-    "morgan": "^1.9.1",
+    "jsrsasign": "^8.0.12",
     "moment": "^2.24.0",
+    "morgan": "^1.9.1",
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

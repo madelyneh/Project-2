@@ -1,14 +1,17 @@
 var db = require("../models");
+// var router = require('express').Router();
 
 module.exports = function(app) {
   app.get("/api/weekly", function(req, res) {
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Post
-    db.Weekly.findAll({
+    db.Weeklies.findAll({
       include: [db.Author]
     }).then(function(dbWeekly) {
       res.json(dbWeekly);
+    }).catch((error) => {
+      res.json(error)
     });
   });
 
@@ -43,7 +46,7 @@ module.exports = function(app) {
   });
 
   // PUT route for updating posts
-  app.put("/api/weekly", function(req, res) {
+app.put("/api/weekly", function(req, res) {
     db.Weekly.update(req.body, {
       where: {
         id: req.body.id

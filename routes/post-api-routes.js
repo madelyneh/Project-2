@@ -1,4 +1,3 @@
-
 var db = require("../models");
 
 // Routes
@@ -18,7 +17,6 @@ module.exports = function(app) {
       res.json(dbPost);
     });
   });
-
 
   // Get route for retrieving a single post
   app.get("/api/posts/:id", function(req, res) {
@@ -41,8 +39,6 @@ module.exports = function(app) {
       res.json(dbPost);
     });
   });
-  
-
   // DELETE route for deleting posts
   app.delete("/api/posts/:id", function(req, res) {
     db.Post.destroy({

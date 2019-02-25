@@ -1,7 +1,8 @@
 var db = require("../models");
-
+// var router = require('express').Router();
 module.exports = function(app) {
   app.get("/api/authors", function(req, res) {
+    console.log("[author-api-routes.js 5] req: " + req);
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join
     // In this case, just db.Post
@@ -41,5 +42,5 @@ module.exports = function(app) {
       res.json(dbAuthor);
     });
   });
-
 };
+// module.exports = router;

@@ -23,31 +23,7 @@ var LocalStrategy = require('passport-local');
 var JWTStrategy = require('passport-jwt').Strategy;
 let ExtractJWT = require('passport-jwt').ExtractJwt;
 
-
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static("public"));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// This checks if the user is logged in or not. If they arent it will redirect to the login page
-app.use(passport.authenticate('jwt', { session: false }))
-app.use(function (req, res, next) {
-  if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
-    console.log('on to the next one');
-    // return res.redirect("/daily");
-    return next();
-  }
-  console.log("YOU SHALL NOT PASSSSSS");
-  return res.redirect("/");
-});
-
+// Passport strategies
 passport.use(new LocalStrategy(
   {
     usernameField: 'username',
@@ -59,7 +35,7 @@ passport.use(new LocalStrategy(
     db.Author.findOne({ where:{ username: username }})
       .then(function(user) {
           console.log("[server.js] Passport Local Strategy");
-          console.log("Server 56: " + user);
+          console.log("Server 56: " + JSON.stringify(user));
           if (!user) {
             // If there is no user a user needs to be made here
             console.log("Server.js- 64. User: " + user);
@@ -80,30 +56,49 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(
-  new JWTStrategy({
-    jwtFromRequest: function(req) {
-      var token = null;
-      if (req && req.cookies)
-      {
-          token = req.cookies['token'];
-      }
-      return token;
-    },
-    secretOrKey : 'your_jwt_secret'},
-    function(jwtPayload, done) {
-      //find current users information
-      console.log('[server.js 95] ' + jwtPayload);
-      try {
-        // TODO Put the 'get user' function here to pull up the user's info
-        console.log('In the try');
-        return done(null, jwtPayload)
-      } catch (error) {
-        console.log(error);
-        done(error);
-      }
+  new JWTStrategy(
+  {
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'your_jwt_secret'
+  },
+  function(jwtPayload, done) {
+    console.log('Parsing the tokon');
+    try {
+      return done(null, jwtPayload);
+    } catch (error) {
+      return done(error);
     }
-  )
-);
+  }
+));
+
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static("public"));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// This checks if the user is logged in or not. If they arent it will redirect to the login page
+// app.use(function (req, res, next) {
+//   console.log('[server.js] Checking JWT');
+//   passport.authenticate('JWT', { session: false }, (err, user) => {
+//     console.log('[server.js] JWT Callback');
+//     if (req.user || req.url === '/api/auth' || req.url === '/api/authors') {
+//       console.log('on to the next one');
+//       // return res.redirect("/daily");
+//       return next();
+//     }
+//     console.log("YOU SHALL NOT PASSSSSS");
+//     return res.redirect("/");
+//   });
+// });
+
+
 
 // Handlebars
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -111,11 +106,12 @@ app.set("view engine", "handlebars");
 
 
 // Routes
+var dailyRoutes = require('./routes/secure-routes');
+app.use('daily', passport.authenticate('jwt', {session: false}), dailyRoutes);
 require("./routes/html-routes.js")(app);
-require("./routes/author-api-routes.js")(app);
-require("./routes/post-api-routes.js")(app);
-require("./routes/weekly-post-routes.js")(app);
-require("./routes/auth-api-routes.js")(app);
+require("./routes/author-api-routes")(app);
+require("./routes/weekly-post-routes")(app);
+require("./routes/auth-api-routes")(app);
 
 
 var syncOptions = { force: false };

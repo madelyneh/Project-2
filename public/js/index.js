@@ -5,7 +5,6 @@ $(document).ready(function() {
 
   let API = {
     authenticateUser: function(username, password) {
-      console.log("Public index.js 21" + username + " " + password);
       return $.ajax({
         headers: {
           "Content-Type": "application/json"
@@ -25,12 +24,13 @@ $(document).ready(function() {
   function handleAuthorFormSubmit(event) {
     event.preventDefault();
 
+
     var nameInput = $("#author-name").val().trim();
     var lastName = $("#author-last").val().trim();
     var username = $("#author-username").val().trim();
     var password = $("#author-password").val().trim();
     var birthday = $("#author-birthday").val().trim();
-
+    
     // Don't do anything if the name fields hasn't been filled out
     if (!nameInput) {
       return;
@@ -44,33 +44,29 @@ $(document).ready(function() {
       password: password
     });
 
-    // TODO do we always want to redirect to the /daily page after they have been authenticated
-    // API.authenticateUser(username, password).then(function(token) {
-    //   // console.log(token);
-    //   document.cookie = "token=" + token.token;
-    //   window.location.href = '/daily';
-    // });
+    API.authenticateUser(username, password).then(function(token) {
+      document.cookie = "token=" + token.token;
+      window.location.href = '/daily'+ `?author_id=${sanitizedUser.id}`;
+    });
   }
 
   // A function for creating an author. Calls getAuthors upon completion
   function upsertAuthor(authorData) {
+    
     $.post("/api/authors", authorData)
       .done(function(res) {
+				console.log('TCL: upsertAuthor -> res', res)
         // TODO do something after person is successfully created
-        console.log('CREATED');
-        console.log(res);
-
         API.authenticateUser(authorData.username, authorData.password).then(function(token) {
-          console.log(token);
+				
           document.cookie = "token=" + token.token;
-          window.location = token.redirectUrl;
-					console.log('TCL: upsertAuthor -> token.redirectUrl', token.redirectUrl)
+          return window.location = token.redirectUrl;
         });
       
       })
       .fail(function(err) {
         // TODO What happens if there's a failure to create the person? Error handling
-        console.error(err);
+        console.error("ERROR!! [index.js 76] " +err);
       });
   }
 

@@ -5,26 +5,46 @@
 // Dependencies
 // =============================================================
 var path = require("path");
-let db = require("../models");
-let jwt = require("jsonwebtoken");
+var db = require("../models");
+var jwt = require("jsonwebtoken");
+// var router = require('express').Router();
+
+
 
 // Routes
 // =============================================================
-module.exports = function(app) {
 
   // Each of the below routes just handles the HTML page that the user gets sent to.
-
+// module.exports = function(app) {
   // index route loads view.html
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-  });
+  // router.get("/", function(req, res) {
+  //   console.log("HERE")
+  //     if (req.cookies.token) {
+  //       var user = jwt.verify(req.cookies.token, 'your_jwt_secret');
+  //       console.log(user);
+  //       if (user) {
+  //           db.Example.findAll({}).then(function (dbExamples) {
+  //               return res.render(`daily?author_id=${authorId}`) 
+  //           });
+
+  //       } else {
+  //           return res.sendFile(path.join(__dirname, "../public/index.html"));
+
+  //       }
+  //   } else {
+  //       return res.sendFile(path.join(__dirname, "../public/index.html"));
+  //   }
+  // });
+module.exports = function(app) {
 
   // cms route loads cms.html
   app.get("/daily", function(req, res) {
+    console.log("HERE");
     // res.sendFile(path.join(__dirname, "../public/cms.html"));
     db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("daily", {
         example: dbExample
+        
       });
     });
   });
@@ -32,6 +52,8 @@ module.exports = function(app) {
   app.get("/weekly", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/cms.html"));
     db.Post.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+			console.log('TCL: dbExample', dbExample)
+      
       res.render("weekly", {
         example: dbExample
       });
@@ -52,5 +74,5 @@ module.exports = function(app) {
   app.get("/weekly-post", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/weekly.html"));
   });
-
-};
+}
+// module.exports = router;

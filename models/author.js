@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
   const Author = sequelize.define("Author", {
     // Giving the Author model a name of type STRING
     nameInput: DataTypes.STRING,
-    lastname: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     birthday: DataTypes.DATE,
     username: DataTypes.STRING,
     password: DataTypes.STRING

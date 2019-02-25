@@ -6,7 +6,7 @@ $(document).ready(function() {
   var $worst = $("#worst");
   var $next = $("#next_week");
   // Adding an event listener for when the form is submitted
-  $("#weekSubmit").on("click", function (event) {
+  $("#weekSubmit").on("click", function(event) {
     // A function for handling what happens when the form to create a new post is submitted
     event.preventDefault();
 
