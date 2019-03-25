@@ -181,8 +181,8 @@ label {
   margin-top: 75px;
 }
 .carousel-control-next-icon {
-  background-image: url('./icons/required/caret-right.svg');
+  background-image: url('../styles/icons/required/caret-right.svg');
 }
 .carousel-control-prev-icon {
-  background-image: url('./icons/required/caret-left.svg');
+  background-image: url('../styles/icons/required/caret-left.svg');
 }
