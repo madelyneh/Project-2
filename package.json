@@ -24,7 +24,7 @@
     "fullcalendar": "^3.10.0",
     "jsonwebtoken": "^8.4.0",
     "jsrsasign": "^8.0.12",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
