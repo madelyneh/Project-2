@@ -22,7 +22,7 @@
     "express-handlebars": "^3.0.0",
     "fs": "0.0.1-security",
     "fullcalendar": "^3.10.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "jsrsasign": "^8.0.12",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
